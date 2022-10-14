@@ -1,3 +1,7 @@
+// repo:
+// https://github.com/gungunzp/namaste_js
+
+// gh pages:
 // https://gungunzp.github.io/namaste_js/
 
 // ************************************************************** https://youtu.be/qikxEIxsXco?list=PLlasXeu85E9cQ32gLCvAvr9vNaUccPVNP
@@ -23,7 +27,7 @@
 //     }, i * 1000);
 //   }
 
-//   console.log('Namaste JavaScript');
+//   console.log('Namaste 🙏 JavaScript');
 // }
 // x();
 
@@ -37,7 +41,7 @@
 //     close(i);
 //   }
 
-//   console.log('Namaste JavaScript');
+//   console.log('Namaste 🙏 JavaScript');
 // }
 // x();
 
@@ -177,24 +181,30 @@
 const interval = 1000;
 const doSomething = (element) => () => {
   // do something (e.g. make search request on typing)
-  console.log('~~~~~~~ ', element.value);
+  console.log('~~~~~~~🙏~~~~~~~', element.value);
 };
 
 const debounce = (callback, delay) => {
   let currTypeTime;
+  let id;
   // console.log('~ INIT currTypeTime', currTypeTime);
 
   return () => {
     currTypeTime = Date.now();
     // console.log('~ UPDATE (INNER FN) currTypeTime', currTypeTime);
 
-    setTimeout(() => {
-      // console.log('~ Date.now() (INSIDE setTimeout)', Date.now());
+    if (!id) {
+      id = setInterval(() => {
+        // console.log('~ Date.now() (INSIDE setInterval)', Date.now());
 
-      if (Date.now() > currTypeTime + delay) {
-        callback();
-      }
-    }, delay);
+        if (Date.now() > currTypeTime + delay) {
+          callback();
+
+          clearInterval(id);
+          id = null;
+        }
+      }, delay);
+    }
   };
 };
 
