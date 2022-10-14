@@ -1,3 +1,5 @@
+// https://gungunzp.github.io/namaste_js/
+
 // ************************************************************** https://youtu.be/qikxEIxsXco?list=PLlasXeu85E9cQ32gLCvAvr9vNaUccPVNP
 
 // function x() {
@@ -172,24 +174,32 @@
 // ************************************************************** https://youtu.be/Zo-6_qx8uxg
 // debounce
 
+const interval = 1000;
+const doSomething = (element) => () => {
+  // do something (e.g. make search request on typing)
+  console.log('~~~~~~~ ', element.value);
+};
+
+const debounce = (callback, delay) => {
+  let currTypeTime;
+  // console.log('~ INIT currTypeTime', currTypeTime);
+
+  return () => {
+    currTypeTime = Date.now();
+    // console.log('~ UPDATE (INNER FN) currTypeTime', currTypeTime);
+
+    setTimeout(() => {
+      // console.log('~ Date.now() (INSIDE setTimeout)', Date.now());
+
+      if (Date.now() > currTypeTime + delay) {
+        callback();
+      }
+    }, delay);
+  };
+};
+
 window.onload = () => {
   const input = document.getElementById('input');
   input.focus();
-
-  let interval = 1000;
-  let currTypeTime;
-
-  input.addEventListener('keyup', () => {
-    currTypeTime = Date.now();
-    let currInputValue = input.value;
-
-    setTimeout(() => {
-      if (Date.now() > currTypeTime + interval) {
-        currInputValue = input.value;
-
-        // make request
-        console.log('~~~~~~~ currInputValue', currInputValue);
-      }
-    }, interval);
-  });
+  input.addEventListener('keyup', debounce(doSomething(input), interval));
 };
