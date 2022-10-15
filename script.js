@@ -179,33 +179,22 @@
 // debounce
 
 const interval = 1000;
-const doSomething = (element) => () => {
+const doSomething = (element) => (event) => {
+  // console.log('~ event', event);
+
   // do something (e.g. make search request on typing)
   console.log('~~~~~~~🙏~~~~~~~', element.value);
 };
 
 const debounce = (callback, delay) => {
-  // let currTypeTime;
-  let id;
-  // console.log('~ INIT currTypeTime', currTypeTime);
+  let timer;
 
-  return () => {
-    // currTypeTime = Date.now();
-    // console.log('~ UPDATE (INNER FN) currTypeTime', currTypeTime);
+  return function() {
+    clearTimeout(timer);
 
-    // if (!id) {
-    clearTimeout(id);
-    id = setTimeout(() => {
-      // console.log('~ Date.now() (INSIDE setInterval)', Date.now());
-
-      // if (Date.now() > currTypeTime + delay) {
-      callback();
-
-      // clearInterval(id);
-      // id = null;
-      // }
+    timer = setTimeout(() => {
+      callback.apply(this, arguments);
     }, delay);
-    // }
   };
 };
 
