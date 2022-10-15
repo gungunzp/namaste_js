@@ -185,26 +185,27 @@ const doSomething = (element) => () => {
 };
 
 const debounce = (callback, delay) => {
-  let currTypeTime;
+  // let currTypeTime;
   let id;
   // console.log('~ INIT currTypeTime', currTypeTime);
 
   return () => {
-    currTypeTime = Date.now();
+    // currTypeTime = Date.now();
     // console.log('~ UPDATE (INNER FN) currTypeTime', currTypeTime);
 
-    if (!id) {
-      id = setInterval(() => {
-        // console.log('~ Date.now() (INSIDE setInterval)', Date.now());
+    // if (!id) {
+    clearTimeout(id);
+    id = setTimeout(() => {
+      // console.log('~ Date.now() (INSIDE setInterval)', Date.now());
 
-        if (Date.now() > currTypeTime + delay) {
-          callback();
+      // if (Date.now() > currTypeTime + delay) {
+      callback();
 
-          clearInterval(id);
-          id = null;
-        }
-      }, delay);
-    }
+      // clearInterval(id);
+      // id = null;
+      // }
+    }, delay);
+    // }
   };
 };
 
@@ -213,3 +214,8 @@ window.onload = () => {
   input.focus();
   input.addEventListener('keyup', debounce(doSomething(input), interval));
 };
+
+// features:
+// display debounce value on a page
+// make debounce value adjustable (input type number)
+// make console.log visible on a page (for callbacks)
